@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  indexer:
+    container_name: finder_indexer
+    build: ./indexer
+    ports:
+      - '3001:3001'
+    restart: always
+    volumes:
+      - ./indexer/:/finder/indexer
+  frontend:
+    container_name: finder_front
+    build: ./frontend
+    ports:
+      - '3000:5173'
+    restart: always
+    depends_on:
+      - indexer
+    volumes:
+      - ./frontend/src:/finder/front/src
